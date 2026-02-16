@@ -1,0 +1,23 @@
+version: '3.9'
+
+# Simple IQ Server configuration, using embedded database (H2)
+# and default /etc/nexus-iq-server/config.yml embedded in the container image: https://help.sonatype.com/en/config-yaml.html
+
+# see first lines of logs:
+# INFO [main] *SYSTEM com.sonatype.insight.brain.service.InsightBrainService - |------------------------------------------
+# INFO [main] *SYSTEM com.sonatype.insight.brain.service.InsightBrainService - |
+# INFO [main] *SYSTEM com.sonatype.insight.brain.service.InsightBrainService - | Initializing Nexus IQ Server 1 release 200.0-01 build 51
+# INFO [main] *SYSTEM com.sonatype.insight.brain.service.InsightBrainService - |
+# INFO [main] *SYSTEM com.sonatype.insight.brain.service.InsightBrainService - |------------------------------------------
+# INFO [main] *SYSTEM com.sonatype.insight.brain.db.H2DiskDatabaseConfigProvider - Using embedded database at /sonatype-work/data
+
+services:
+
+  iq-server:
+    image: "sonatype/nexus-iq-server:1.200.0"
+    ports:
+      - "8070:8070"
+#      - "8071:8071" # https://help.sonatype.com/en/operational-menu.html
+    volumes:
+      - "./data/iq-data:/sonatype-work:delegated"
+      - "./data/iq-logs:/var/log/nexus-iq-server:delegated"
