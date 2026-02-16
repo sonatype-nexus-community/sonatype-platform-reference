@@ -145,7 +145,7 @@ services:
     volumes:
       - *pgsql-volume-data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${PG_DB_USER:?err}"]
+      test: ["CMD-SHELL", "pg_isready -d ${PG_DB_NAME:?err} -U ${PG_DB_USER:?err}"]
       interval: 1s
       timeout: 5s
       retries: 10
@@ -168,7 +168,7 @@ services:
     volumes:
       - *pgsql-nxrm-volume-data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U nxrm"]
+      test: ["CMD-SHELL", "pg_isready -d nxrm -U nxrm"]
       interval: 1s
       timeout: 5s
       retries: 10
