@@ -1,0 +1,55 @@
+version: '3.9'
+
+# Simple IQ Server configuration, using external database (PostgreSQL) with .env configuration
+# as added in config.yml: see https://help.sonatype.com/en/config-yaml.html
+
+# see first lines of logs:
+# INFO [main] *SYSTEM com.sonatype.insight.brain.service.InsightBrainService - |------------------------------------------
+# INFO [main] *SYSTEM com.sonatype.insight.brain.service.InsightBrainService - |
+# INFO [main] *SYSTEM com.sonatype.insight.brain.service.InsightBrainService - | Initializing Nexus IQ Server 1 release 200.0-01 build 51
+# INFO [main] *SYSTEM com.sonatype.insight.brain.service.InsightBrainService - |
+# INFO [main] *SYSTEM com.sonatype.insight.brain.service.InsightBrainService - |------------------------------------------
+# INFO [main] *SYSTEM com.sonatype.insight.brain.db.datastore.DefaultOperationalDataStore - Initializing the insight_brain_ods data store.
+# DEBUG [main] *SYSTEM com.sonatype.insight.brain.db.datasource.DataSourceProvider - DB URL: 'jdbc:postgresql://postgres-iq:5432/iqserver'
+
+services:
+
+  iq-server:
+    image: "sonatype/nexus-iq-server:1.200.0"
+    depends_on:
+      postgres-iq:
+        condition: service_healthy
+    environment:
+      # external DB parameters used in config.yml
+      DATABASE_HOSTNAME: postgres-iq
+      DATABASE_PORT: ${PG_DB_PORT:-5432}
+      DATABASE_NAME: ${PG_DB_NAME:?err}
+      DATABASE_USERNAME: ${PG_DB_USER:?err}
+      DATABASE_PASSWORD: ${PG_DB_PASS:?err}
+    ports:
+      - "8070:8070"
+#      - "8071:8071" # https://help.sonatype.com/en/operational-menu.html
+    volumes:
+      - "./config.yml:/etc/nexus-iq-server/config.yml:delegated"
+      - "./sonatype-license.lic:/sonatype-license.lic:delegated" # license configured in config.yml can now be injected from host disk (if available)
+      - "./data/iq-data:/sonatype-work:delegated"
+      - "./data/iq-logs:/var/log/nexus-iq-server:delegated"
+
+  postgres-iq:
+    image: "postgres:18"
+    environment:
+      - POSTGRES_DB=${PG_DB_NAME:?err}
+      - POSTGRES_USER=${PG_DB_USER:?err}
+      - POSTGRES_PASSWORD=${PG_DB_PASS:?err}
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - '5432:5432'
+    shm_size: 128mb
+    user: '${UID}:${GID}'
+    volumes:
+      - "./data/pg-iq-data:/var/lib/postgresql/data:delegated"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d ${PG_DB_NAME:?err} -U ${PG_DB_USER:?err}"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
