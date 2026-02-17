@@ -19,5 +19,5 @@ services:
       - "8070:8070"
 #      - "8071:8071" # https://help.sonatype.com/en/operational-menu.html
     volumes:
-      - "./data/iq-data:/sonatype-work:delegated"
-      - "./data/iq-logs:/var/log/nexus-iq-server:delegated"
+      - "./data/iq-data:/sonatype-work"
+      - "./data/iq-logs:/var/log/nexus-iq-server"

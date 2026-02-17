@@ -1,6 +1,6 @@
 version: '3.9'
 
-x-env-license: &env-license-volume '${NEXUS_LICENSE_PATH:?err}:/sonatype-license.lic:ro'
+x-env-license: &env-license-volume '${NEXUS_LICENSE_PATH:?err}:/sonatype-license.lic'
 
 x-nxrm3-healthcheck: &nxrm3-healthcheck
   test:
@@ -48,7 +48,7 @@ services:
       - direct
     volumes:
       - *env-license-volume
-      - "./config/nexus-iq-config.yaml:/etc/nexus-iq-server/config.yml:delegated"
+      - "./config/nexus-iq-config.yaml:/etc/nexus-iq-server/config.yml"
       - *x-nxiq-volume-data
       - *x-nxiq-volume-logs
     
@@ -72,7 +72,7 @@ services:
       - cicd-jenkins
     volumes:
       - *env-license-volume
-      - "./config/nexus-iq-config.yaml:/etc/nexus-iq-server/config.yml:delegated"
+      - "./config/nexus-iq-config.yaml:/etc/nexus-iq-server/config.yml"
       - *x-nxiq-volume-data
       - *x-nxiq-volume-logs
 
@@ -201,8 +201,8 @@ services:
     profiles:
       - proxied
     volumes:
-      - "./config/nginx.conf:/etc/nginx/nginx.conf:ro"
-      - "./config/nginx-www:/usr/share/nginx/html:ro"
+      - "./config/nginx.conf:/etc/nginx/nginx.conf"
+      - "./config/nginx-www:/usr/share/nginx/html"
 
   proxy-cicd-jenkins:
     image: "nginx:${NGINX_VERSION:?err}"
@@ -233,8 +233,8 @@ services:
     profiles:
       - cicd-jenkins
     volumes:
-      - "./config/nginx-cicd.conf:/etc/nginx/nginx.conf:ro"
-      - "./config/nginx-www:/usr/share/nginx/html:ro"
+      - "./config/nginx-cicd.conf:/etc/nginx/nginx.conf"
+      - "./config/nginx-www:/usr/share/nginx/html"
 
   # ------- Other non Sonatype Services --------
   jenkins-direct:
@@ -262,7 +262,7 @@ services:
     profiles:
       - jenkins
     volumes:
-      - '${DOCKER_ROOT_VOLUME_MOUNT_POINT:?err}/jenkins:/var/jenkins_home:delegated'
+      - '${DOCKER_ROOT_VOLUME_MOUNT_POINT:?err}/jenkins:/var/jenkins_home'
 
   jenkins-proxied:
     build: ./images/jenkins
@@ -287,7 +287,7 @@ services:
     profiles:
       - cicd-jenkins
     volumes:
-      - '${DOCKER_ROOT_VOLUME_MOUNT_POINT:?err}/jenkins:/var/jenkins_home:delegated'
+      - '${DOCKER_ROOT_VOLUME_MOUNT_POINT:?err}/jenkins:/var/jenkins_home'
 
   swagger-editor:
     image: "swaggerapi/swagger-editor:latest"
@@ -318,7 +318,7 @@ services:
     profiles:
       - webhooks
     volumes:
-      - ${WEBHOOK_HANDLER_CONFIG_PATH}:/config.json:ro
+      - ${WEBHOOK_HANDLER_CONFIG_PATH}:/config.json
 
 networks:
   default: null
