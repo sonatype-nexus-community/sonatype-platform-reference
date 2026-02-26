@@ -4,7 +4,7 @@ This repo contains `docker-compose` files associated sample configuration for qu
 
 Ideal if you want to get hands on quickly :-)
 
-Unless you have a license from [Sonatype](https://www.sonatype.com), you will only be able to use [Sonatype Nexus Repository OSS](https://www.sonatype.com/products/repository-oss).
+Unless you have a license from [Sonatype](https://www.sonatype.com), you will only be able to use [Sonatype Nexus Repository CE](https://www.sonatype.com/products/repository-oss).
 
 If you don't have a trial license and would like one [contact Sonatype](https://www.sonatype.com).
 
@@ -12,7 +12,7 @@ If you don't have a trial license and would like one [contact Sonatype](https://
 
 When we refer to the Sonatype Platform, we actually refer to three of Sonatype's core-products and their associated add-on packs. These are:
 
-1. Sonatype Nexus Repository (either [Sonatype Nexus Repository OSS](https://www.sonatype.com/products/repository-oss) or [Sonatype Nexus Repository Pro](https://www.sonatype.com/products/repository-pro))
+1. Sonatype Nexus Repository (either [Sonatype Nexus Repository CE](https://www.sonatype.com/products/repository-oss) or [Sonatype Nexus Repository Pro](https://www.sonatype.com/products/repository-pro))
 2. [Sonatype Lifecycle](https://www.sonatype.com/products/open-source-security-dependency-management) and its add-on packs:
     - [Advanced Legal Pack](https://www.sonatype.com/products/advanced-legal-pack)
 3. [Sonatype Repository Firewall](https://www.sonatype.com/products/sonatype-repository-firewall)
@@ -27,7 +27,7 @@ We utilise [docker-compose profiles](https://docs.docker.com/compose/profiles/) 
 Assuming you have [Docker Desktop](https://www.docker.com/products/docker-desktop) 19.03.0+ (or similar) installed, you can simply copy default `.env-example` to `.env` and run `docker-compose` passing the required profile. An example using the `proxied` profile might be:
 
 ```
-cat .env-example | sed -e "s/ORGANIZATION=sonatype/ORGANIZATION=sonatype$([ $(uname -p) = "arm" ] && echo "community")/" -e "s/^UID=.*$/UID=$UID/g" -e "s/^GID=.*$/GID=$GID/g" > .env
+cat .env-example | sed -e "s/^UID=.*$/UID=$UID/g" -e "s/^GID=.*$/GID=$GID/g" > .env
 docker-compose --profile=proxied up -d
 ```
 
@@ -49,7 +49,7 @@ For most of the reference architectures, you'll need a Sonatype license. If you 
 | --------------- | ---------------- | --------------------------------------------- | ---------------------------------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------- |
 | `proxied`       | Yes              | Yes - [here](http://nexus-platform.localhost) | Yes [here](http://repo.localhost/)       | Yes [here](http://iq.localhost/)       | Both Nexus Repository Pro and Sonatype Lifecycle available behind an NGINX reverse proxy.                |
 | `direct`        | Yes              | No                                            | Yes - [here](http://repo.localhost:8081) | Yes - [here](http://iq.localhost:8070) | Both Nexus Repository Pro and Sonatype Lifecycle available directly via `localhost` addressed over HTTP. |
-| `repoOssDemo`   | No               | No                                            | Yes - [here](http://repo.localhost:8081) | No                                     | Nexus Repo OSS will be started.                                                                       |
+| `repoOssDemo`   | No               | No                                            | Yes - [here](http://repo.localhost:8081) | No                                     | Nexus Repo CE will be started.                                                                       |
 | `cicd-jenkins`  | Yes              | Yes - [here](http://nexus-platform.localhost) | Yes [here](http://repo.localhost/)       | Yes [here](http://iq.localhost/)       | Includes a Jenkins [here](http://nexus-platform/jenkins)                                              |
 | `jenkins-direct` | No | No | No | No | Just Jenkins running [here](http://localhost:8888/jenkins) |
 
