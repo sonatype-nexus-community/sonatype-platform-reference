@@ -4,7 +4,7 @@ x-env-license: &env-license-volume '${NEXUS_LICENSE_PATH:?err}:/sonatype-license
 
 x-nxrm3-volume-nexus-properties: &nxrm3-volume-nexus-properties '../../config/nexus-repo.properties:/nexus-data/etc/nexus.properties'
 
-x-nxrm3-volume-data: &nxrm3-volume-data '${DOCKER_ROOT_VOLUME_MOUNT_POINT:?err}/nexus-data:/nexus-data:delegated'
+x-nxrm3-volume-data: &nxrm3-volume-data '${DOCKER_ROOT_VOLUME_MOUNT_POINT:?err}/nexus-data:/nexus-data'
 
 services:
 

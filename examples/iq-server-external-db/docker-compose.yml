@@ -30,10 +30,10 @@ services:
       - "8070:8070"
 #      - "8071:8071" # https://help.sonatype.com/en/operational-menu.html
     volumes:
-      - "./config.yml:/etc/nexus-iq-server/config.yml:delegated"
-      - "./sonatype-license.lic:/sonatype-license.lic:delegated" # license configured in config.yml can now be injected from host disk (if available)
-      - "./data/iq-data:/sonatype-work:delegated"
-      - "./data/iq-logs:/var/log/nexus-iq-server:delegated"
+      - "./config.yml:/etc/nexus-iq-server/config.yml"
+      - "./sonatype-license.lic:/sonatype-license.lic" # license configured in config.yml can now be injected from host disk (if available)
+      - "./data/iq-data:/sonatype-work"
+      - "./data/iq-logs:/var/log/nexus-iq-server"
 
   postgres-iq:
     image: "postgres:18"
@@ -47,7 +47,7 @@ services:
     shm_size: 128mb
     user: '${UID}:${GID}'
     volumes:
-      - "./data/pg-iq-data:/var/lib/postgresql/data:delegated"
+      - "./data/pg-iq-data:/var/lib/postgresql/data"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d ${PG_DB_NAME:?err} -U ${PG_DB_USER:?err}"]
       interval: 1s
