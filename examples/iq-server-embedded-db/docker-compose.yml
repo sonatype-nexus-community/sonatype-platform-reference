@@ -11,10 +11,27 @@ version: '3.9'
 # INFO [main] *SYSTEM com.sonatype.insight.brain.service.InsightBrainService - |------------------------------------------
 # INFO [main] *SYSTEM com.sonatype.insight.brain.db.H2DiskDatabaseConfigProvider - Using embedded database at /sonatype-work/data
 
+# or in more recent versions:
+# INFO 7 --- [           main] c.s.i.b.s.InsightBrainSpringApplication  : Starting InsightBrainSpringApplication v1.206.0-01 using Java 25.0.3 with PID 7 (/opt/sonatype/nexus-iq-server/jars/insight-brain-service-1.206.0-01-server.jar started by nexus in /opt/sonatype/nexus-iq-server)
+# INFO 7 --- [           main] c.s.i.b.s.InsightBrainSpringApplication  : No active profile set, falling back to 1 default profile: "default"
+# INFO 7 --- [           main] .s.i.b.s.c.DropwizardConfigConfiguration : Loading configuration from /etc/nexus-iq-server/config.yml
+# WARN 7 --- [           main] .s.i.b.s.c.DropwizardConfigConfiguration : HDS URL not configured, some features may not work
+# INFO 7 --- [           main] c.s.i.b.s.c.RequestLoggingConfiguration  : Configuring access-event request log with 1 appender(s)
+# INFO 7 --- [           main] o.s.b.j.s.JettyServletWebServerFactory   : Server initialized with port: 8070
+# INFO 7 --- [           main] org.eclipse.jetty.server.Server          : jetty-12.1.10; built: 2026-05-31T04:45:52.925Z; git: 986024525891c2c20ff08c58ba300dc3b9847586; jvm 25.0.3+9-LTS
+# INFO 7 --- [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1765 ms
+# INFO 7 --- [           main] c.s.i.b.s.config.DatabaseConfiguration   : Initializing database container
+# INFO 7 --- [           main] c.s.i.b.db.H2DiskDatabaseConfigProvider  : Using embedded database at /sonatype-work/data
+# INFO 7 --- [           main] c.s.i.b.db.H2DiskDatabaseConfigProvider  : Using embedded database at /sonatype-work/data
+# INFO 7 --- [           main] c.s.i.b.db.H2DiskDatabaseConfigProvider  : Using embedded database at /sonatype-work/data
+# INFO 7 --- [           main] c.s.i.b.db.H2DiskDatabaseConfigProvider  : Using embedded database at /sonatype-work/data
+# INFO 7 --- [           main] c.s.i.b.s.config.DatabaseConfiguration   : Initializing data stores
+
+
 services:
 
   iq-server:
-    image: "sonatype/nexus-iq-server:1.200.0"
+    image: "sonatype/nexus-iq-server:1.206.0"
     ports:
       - "8070:8070"
 #      - "8071:8071" # https://help.sonatype.com/en/operational-menu.html
