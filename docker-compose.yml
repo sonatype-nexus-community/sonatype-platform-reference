@@ -29,7 +29,7 @@ x-pgsql-nxrm-volume-data: &pgsql-nxrm-volume-data 'pg-nxrm-data:/var/lib/postgre
 services:
 
   nxiq-direct:
-    image: "${NEXUS_DOCKER_IMAGE_ORGANIZATION}/nexus-iq-server:${NEXUS_IQ_SERVER_VERSION:?err}"
+    image: "sonatype/nexus-iq-server:${NEXUS_IQ_SERVER_VERSION:?err}"
     depends_on:
       postgres:
         condition: service_healthy
@@ -53,7 +53,7 @@ services:
       - *x-nxiq-volume-logs
     
   nxiq-proxied:
-    image: "${NEXUS_DOCKER_IMAGE_ORGANIZATION}/nexus-iq-server:${NEXUS_IQ_SERVER_VERSION:?err}"
+    image: "sonatype/nexus-iq-server:${NEXUS_IQ_SERVER_VERSION:?err}"
     depends_on:
       postgres:
         condition: service_healthy
@@ -77,7 +77,7 @@ services:
       - *x-nxiq-volume-logs
 
   nxrm3-direct:
-    image: "${NEXUS_DOCKER_IMAGE_ORGANIZATION}/nexus3:${NEXUS_REPOSITORY_VERSION:?err}"
+    image: "sonatype/nexus3:${NEXUS_REPOSITORY_VERSION:?err}"
     depends_on:
       postgres-nxrm:
         condition: service_healthy
@@ -96,7 +96,7 @@ services:
       - *env-license-volume
 
   nxrm3_direct_oss:
-    image: "${NEXUS_DOCKER_IMAGE_ORGANIZATION}/nexus3:${NEXUS_REPOSITORY_VERSION:?err}"
+    image: "sonatype/nexus3:${NEXUS_REPOSITORY_VERSION:?err}"
     environment:
       NEXUS_SECURITY_RANDOMPASSWORD: 'false'
     healthcheck:
@@ -108,7 +108,7 @@ services:
       - repoOssDemo
 
   nxrm3-proxied:
-    image: "${NEXUS_DOCKER_IMAGE_ORGANIZATION}/nexus3:${NEXUS_REPOSITORY_VERSION:?err}"
+    image: "sonatype/nexus3:${NEXUS_REPOSITORY_VERSION:?err}"
     depends_on:
       postgres-nxrm:
         condition: service_healthy
